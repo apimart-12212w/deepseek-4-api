@@ -1,0 +1,30 @@
+{
+  "models": {
+    "deepseek-v4-flash": {
+      "list": {
+        "input": 0.428571,
+        "cached_input": 0.085714,
+        "output": 1.285714
+      },
+      "effective": {
+        "input": 0.3428568,
+        "cached_input": 0.0685712,
+        "output": 1.0285712
+      }
+    },
+    "deepseek-v4-pro": {
+      "list": {
+        "input": 1.285714,
+        "cached_input": 0.257143,
+        "output": 3.857143
+      },
+      "effective": {
+        "input": 1.0285712,
+        "cached_input": 0.2057144,
+        "output": 3.0857144
+      }
+    }
+  },
+  "source": "https://apimart.ai/en/pricing",
+  "extracted_at": "2026-09-18T03:38:47Z"
+}

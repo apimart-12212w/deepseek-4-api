@@ -1,0 +1,70 @@
+[
+  {
+    "slug": "01-cache-economics",
+    "kind": "analysis",
+    "prompt": "Explain when cached input pricing beats a lower output price, with a one-line formula.",
+    "model": "deepseek-v4-pro",
+    "response": "Cached input pricing means you pay a premium for a pre‑computed, instantly available piece of data (the cached input) instead of paying a lower price for a freshly generated result (the output). The higher price is worth it whenever the money you save by not waiting outweighs the price markup.\n\nIn one line:\n\n**`P_cache < P_output + v · (t_output − t_cache)`**\n\nwhere  \n`P_cache` = price of the cached input  \n`P_output` = price of the on‑demand output  \n`v` = your cost of delay per unit of time (e.g., lost revenue per second)  \n`t_output` = time to compute/receive the output  \n`t_cache` = time to retrieve the cached input.",
+    "usage": {
+      "prompt_tokens": 21,
+      "completion_tokens": 2793,
+      "total_tokens": 2814,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 2635
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "input_tokens_details": null,
+      "output_tokens_details": null,
+      "claude_cache_creation_5_m_tokens": 0,
+      "claude_cache_creation_1_h_tokens": 0
+    },
+    "latency_s": 66.8,
+    "finish_reason": "stop",
+    "computed_cost_usd": 0.00864
+  },
+  {
+    "slug": "02-batch-router",
+    "kind": "code",
+    "prompt": "Write a 15-line Python function that routes a batch job to the cheapest model from a dict of {model: (in_price, out_price)} given expected input and output tokens.",
+    "model": "deepseek-v4-pro",
+    "response": "```python\ndef route_batch(model_prices: dict[str, tuple[float, float]], input_tokens: int, output_tokens: int) -> str:\n    \"\"\"\n    Routes a batch job to the cheapest model.\n    \n    Args:\n        model_prices: dict mapping model names to (in_price, out_price) per token.\n        input_tokens: expected number of input tokens.\n        output_tokens: expected number of output tokens.\n    \n    Returns:\n        The model name with the lowest total cost.\n    \"\"\"\n    if not model_prices:\n        raise ValueError(\"At least one model must be provided.\")\n    return min(model_prices, key=lambda m: model_prices[m][0]*input_tokens + model_prices[m][1]*output_tokens)\n```",
+    "usage": {
+      "prompt_tokens": 41,
+      "completion_tokens": 1161,
+      "total_tokens": 1202,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 998
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "input_tokens_details": null,
+      "output_tokens_details": null,
+      "claude_cache_creation_5_m_tokens": 0,
+      "claude_cache_creation_1_h_tokens": 0
+    },
+    "latency_s": 24.9,
+    "finish_reason": "stop",
+    "computed_cost_usd": 0.003625
+  }
+]

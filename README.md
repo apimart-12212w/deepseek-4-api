@@ -1,8 +1,25 @@
 # DeepSeek 4 API (deepseek-v4-pro / deepseek-v4-flash)
 
-DeepSeek 4 on APIMart splits into `deepseek-v4-pro` and `deepseek-v4-flash`: same OpenAI-compatible chat endpoint, per-million-token pricing, and the cheapest cached-input rates in this series.
+<!-- conv-kit:v1 -->
 
-**Attributed entry points:** [Browse the model catalog](https://go.apimart.ai/k-afdde2) · [Current pricing](https://go.apimart.ai/k-81357f) · [Get an API key](https://go.apimart.ai/k-a3035b)
+<p align="center">
+  <img src="assets/badges/price.svg" alt="observed unit price"> <img src="assets/badges/billing.svg" alt="billing model"> <img src="assets/badges/compat.svg" alt="OpenAI-compatible endpoint">
+</p>
+
+> **$1.03 / $3.09 per million tokens** (input / output, effective) — one OpenAI-compatible endpoint at `https://api.apimart.ai/v1`, no monthly plan required. *(observed 2026-09-17)*
+
+**[Get an API key](https://go.apimart.ai/k-a3035b)** · **[Live pricing](https://go.apimart.ai/k-81357f)** · **[Model page](https://go.apimart.ai/k-afdde2)** · [⚡ 60-second quickstart](#quickstart)
+
+**Why teams call DeepSeek 4 Pro (`deepseek-v4-pro`) through APIMart**
+
+- **One key, entire catalog.** The same `https://api.apimart.ai/v1` base URL and `Authorization` header reach DeepSeek 4 Pro (`deepseek-v4-pro`) and 300+ other image, video and language models — switch the `model` field, not your client.
+- **$1 minimum, pay as you go.** No subscription and no prepaid plan to size up front: top up from $1 and spend it on calls. There is no free quota to burn through first, so the price in this table is the price you pay.
+- **The charge comes back in the response.** Every call reports the amount billed (`cost` / `credits_cost`), so a spend number is read per call instead of guessed at month end.
+- **Drop-in OpenAI shape.** `POST /v1/chat/completions` with the same request body your client already sends; only `base_url` and `model` change.
+
+<!-- /conv-kit:v1 -->
+
+DeepSeek 4 on APIMart splits into `deepseek-v4-pro` and `deepseek-v4-flash`: same OpenAI-compatible chat endpoint, per-million-token pricing, and the cheapest cached-input rates in this series.
 
 ## Model ids
 
@@ -27,6 +44,20 @@ Endpoint: `POST https://api.apimart.ai/v1/chat/completions` (OpenAI-compatible).
 | cached_input | $0.2571 | $0.2057 |
 | input | $1.29 | $1.03 |
 | output | $3.86 | $3.09 |
+
+<!-- conv-kit:v1:scale -->
+### What that costs at scale
+
+| Spend | Cost |
+| --- | --- |
+| 1M input tokens | $1.03 |
+| 10M input tokens | $10.30 |
+| 1M input + 250K output (mixed, at the effective output rate) | see the pricing table above |
+
+Linear at the observed per-unit rate, no volume discount assumed. Snapshot 2026-09-17; re-check the live table before committing a budget.
+<!-- /conv-kit:v1:scale -->
+
+
 <!-- pricing:token:end -->
 
 The effective column is what you pay after the default group discount; [`data/model.json`](data/model.json) is refreshed
@@ -77,6 +108,19 @@ from the effective rates above.
 
 Full transcripts (including longer answers) are in [`data/samples.json`](data/samples.json).
 
+<!-- conv-kit:v1:fix -->
+## First-call troubleshooting
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| `401` / `invalid api key` | key missing, truncated, or a stray newline pasted into the header | Re-copy it from the console; the header is `Authorization: Bearer $APIMART_API_KEY` |
+| balance / credit error | the account has no balance | Top up from $1 in the console — there is no free quota to fall back on |
+| `429` | concurrent requests on one key | Back off, then retry the same request with the same `Idempotency-Key` |
+| `400` / model not found | wrong route for the id: the per-unit alias needs its `version`, the official id must not send one | Copy the exact `model` value from the route table above |
+| task ends `failed` | prompt rejected by the filter, or a reference image URL expired | Re-submit with a **new** `Idempotency-Key` and re-host the reference image |
+| result URL stops working | result links expire | Download the file as soon as the task reports `completed` |
+<!-- /conv-kit:v1:fix -->
+
 ## FAQ
 
 **What are the DeepSeek 4 model ids?**
@@ -104,6 +148,12 @@ The chat endpoint accepts `tools` with JSON-schema functions like the other rout
 - `llm api pricing comparison`
 - `openai compatible api`
 - `cached input pricing`
+
+<!-- conv-kit:v1:cta -->
+---
+
+**Start with $1.** [Get an API key](https://go.apimart.ai/k-a3035b) → [check live pricing](https://go.apimart.ai/k-81357f) → [open DeepSeek 4 Pro (`deepseek-v4-pro`) in the model library](https://go.apimart.ai/k-afdde2). The first call is three steps: submit, poll `task_id`, read the charged amount off the response.
+<!-- /conv-kit:v1:cta -->
 
 ## Attributed links (how this repository is measured)
 
